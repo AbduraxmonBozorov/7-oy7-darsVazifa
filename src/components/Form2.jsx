@@ -1,29 +1,21 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import close from "../assets/image/close.svg";
 import down from "../assets/image/down.svg";
 
-function Form2({ countries }) {
+function Form2({ countries, selectedFrom, setFromRate }) {
   const [openoptions, setOpenOptions] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const inputRef = useRef();
   const [filtred, setFiltred] = useState(countries);
 
-  useEffect(() => {
-    if (openoptions && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [openoptions]);
-
   function handleOpenOptions() {
     setOpenOptions((prevOpenOptions) => {
       const newState = !prevOpenOptions;
 
-      // `inputRef.current` ni yangi holatda mavjudligini tekshirish
       if (!newState && inputRef.current) {
         inputRef.current.value = ""; // input qiymatini tozalash
       }
 
-      // Filtred state'ini tiklash
       if (!newState) {
         setFiltred(countries);
       }
@@ -33,7 +25,7 @@ function Form2({ countries }) {
   }
 
   function handleSearchOptions(e) {
-    let filter = countries.filter((country) => {
+    const filter = countries.filter((country) => {
       const currencyName =
         country.currencies && Object.values(country.currencies)[0]?.name;
 
@@ -48,6 +40,8 @@ function Form2({ countries }) {
 
   function handleSelectCountry(country) {
     setSelectedCountry(country);
+    selectedFrom.setSelectedFrom(Object.values(country.currencies)[0].symbol);
+    setFromRate(Object.values(country.currencies)[0].rateToUSD); // FromRate'ni App componentga uzatamiz
     setOpenOptions(false);
   }
 
