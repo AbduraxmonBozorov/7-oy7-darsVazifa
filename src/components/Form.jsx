@@ -9,9 +9,10 @@ function Form() {
   const [toOpen, setToOpen] = useState(false);
   const [selectedCountryFrom, setSelectedCountryFrom] = useState(data[0]);
   const [selectedCountryTo, setSelectedCountryTo] = useState(data[1]);
+  const [amoutValue, setAmountValue] = useState('1.00');
 
   function handleFrom() {
-    setFromOpen(!fromOpen);
+    setFromOpen(true);
   }
 
   function handleTo() {
@@ -27,6 +28,18 @@ function Form() {
     // console.log(e.target.getAttribute("data-id"));
     setSelectedCountryTo(data[e.target.getAttribute("data-id")]);
   }
+
+  function handleAmout(e){
+    setAmountValue(e.target.value)
+  }
+
+  function handleChangeFrom(e){
+    let filter=data.filter(country=>{
+      return country.name.toLowerCase().includes(e.target.value.toLowerCase())
+    })    
+    setSelectedCountryFrom(filter)
+  }
+  
 
   return (
     <div className="shadow-lg w-full sm:w-3/4 rounded-md">
@@ -47,12 +60,17 @@ function Form() {
       <div className="form-main p-10 grid gap-1 grid-cols-1 sm:grid-cols-2 sm:gap-2 xl:grid-cols-4 xl:gap-3">
         <div className="amout flex flex-col gap-2">
           <label className="text-xl">Amount</label>
-          <input
-            type="text"
-            className="border focus:border-none outline-blue-500 outline-1 rounded p-3"
-            name=""
-            id="amout"
-          />
+          <div className="border focus:border-none outline-blue-500 outline-1 rounded p-3 flex">
+            <span>{selectedCountryFrom?.currencies[Object.keys(selectedCountryFrom.currencies)]?.symbol}</span>
+            <input
+            onChange={handleAmout}
+              value={amoutValue}
+              type="text"
+              className="border-none focus:outline-none"
+              name=""
+              id="amout"
+            />
+          </div>
         </div>
 
         <div className="from flex flex-col gap-2">
@@ -88,6 +106,7 @@ function Form() {
               <>
                 <div className="selectSearch flex justify-between w-80 items-center cursor-pointer border focus:border-none outline-blue-500 outline-1 rounded p-3 py-3">
                   <input
+                  onChange={handleChangeFrom}
                     type="text"
                     className="border-none focus:outline-none"
                     placeholder="Type to search..."
@@ -195,7 +214,9 @@ function Form() {
             repellendus.
           </p>
         </div>
-        <button className="btn btn-outline btn-info bg-blue-500 py-3 px-8 font-medium hover:bg-blue-600 rounded-md text-white">Convert</button>
+        <button className="btn btn-outline btn-info bg-blue-500 py-3 px-8 font-medium hover:bg-blue-600 rounded-md text-white">
+          Convert
+        </button>
       </div>
     </div>
   );
