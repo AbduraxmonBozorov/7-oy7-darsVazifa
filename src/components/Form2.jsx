@@ -54,7 +54,7 @@ function Form2({ countries }) {
   return (
     <div className="">
       <label className="mb-1">From</label>
-      <div className="select w-80 border p-2 rounded-md from">
+      <div className="select w-80 border p-2 rounded-md from relative">
         {!openoptions && selectedCountry && (
           <div
             className="show-selected flex justify-between items-center cursor-pointer"
@@ -88,7 +88,7 @@ function Form2({ countries }) {
         )}
       </div>
       {openoptions && (
-        <ul className="select-options w-80 h-60 overflow-y-auto rounded-md p-2 mt-2 shadow-md">
+        <ul className="select-options w-80 h-60 overflow-y-auto rounded-md p-2 mt-2 shadow-md absolute">
           {filtred.length > 0 ? (
             filtred.map((country, index) => (
               <li

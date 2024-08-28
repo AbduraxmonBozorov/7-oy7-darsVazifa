@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="w-full h-screen flex justify-center items-center" onClick={handleCloseSelect}>
-      <div className="container mx-auto border flex gap-2 items-center p-5">
+      <div className="container mx-auto border flex flex-wrap gap-2 items-center p-5">
         <Amount />
         <Form2 countries={countries} close={{closeSelect, setCloseSelect}} />
         <Form1 countries={countries} close={{closeSelect, setCloseSelect}} />
